@@ -1,0 +1,20 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="axebot">
+  
+    <xacro:property name="PI" value="3.141592653589793"/> 
+
+    <xacro:property name="motor_shaft_length" value="0.01"/> <!-- 10mm--> <!-- random made up value CHANGE ME-->
+    <xacro:property name="motor_shaft_radius" value="0.005"/> <!-- 5mm-->
+    <xacro:property name="motor_shaft_mass" value="0.001"/> <!-- 1gm-->
+
+    <xacro:property name="wheel_rim_thickness" value="0.025"/> <!-- 25mm-->
+    <xacro:property name="wheel_rim_radius" value="0.027"/> <!-- 27mm-->
+    <xacro:property name="wheel_rim_mass" value="0.1"/> <!-- CHANGE ME--> 
+
+    <xacro:property name="distance_to_roller_center" value="0.02332"/> <!-- 23.32mm-->
+    <xacro:property name="roller_z_offset" value="0.00665"/> <!-- 6.65mm-->
+
+    <xacro:property name="chassis_cyl_mass" value="0.3" />
+    <xacro:property name="chassis_cyl_radius" value="0.1" />
+    <xacro:property name="chassis_cyl_height" value="0.03" />
+
+</robot>

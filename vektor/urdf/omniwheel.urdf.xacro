@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omniwheel">
+
+    <!-- the macro file with the inertial macros-->
+
+    <xacro:include filename="constants.xacro"/>
+
+    <xacro:include filename="inertial_macros.xacro"/>
+
+    <xacro:include filename="materials.xacro"/>
+
+    <xacro:include filename="insert_roller_macro.xacro"/>
+
+    
+
+    <xacro:property name="id" value="0"/>
+    <!-- <xacro:property name="theta" value="0"/> -->
+
+    <!-- BASE LINK-->
+
+    <link name="base_link">
+
+    </link>
+
+    <!-- MOTOR SHAFT LINK-->
+
+    <joint name="motor${id}_shaft_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="${PI/2} 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="motor${id}_shaft_link"/>
+    </joint>
+
+    <link name="motor${id}_shaft_link">
+        <visual>
+            <origin xyz="0.0 0.0 -${motor_shaft_length/2}" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="${motor_shaft_radius}" length="${motor_shaft_length}"/>
+            </geometry>
+            <material name="red"/>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 -${motor_shaft_length/2}" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="${motor_shaft_radius}" length="${motor_shaft_length}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${motor_shaft_mass}" radius="${motor_shaft_radius}" length="${motor_shaft_length}">
+            <origin xyz="0.0 0.0 -${motor_shaft_length/2}" rpy="0.0 0.0 0.0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <!-- WHEEL LINK-->
+
+    <joint name="wheel${id}_joint" type="continuous">
+        <origin xyz="0.0 0.0 -${motor_shaft_length+wheel_rim_thickness/2}" rpy="0.0 0.0 0.0"/>
+        <parent link="motor${id}_shaft_link"/>
+        <child link="wheel${id}_link"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+
+    <link name="wheel${id}_link">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <!-- <mesh filename="package://vektor/meshes/merged_wheel_rim_simplified.dae"/> -->
+                <!-- <mesh filename="file://$(find vektor)/meshes/wheel_rim_simplified.stl"/> -->
+                <mesh filename="file://$(find vektor)/meshes/wheel_rim_simplified.dae"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="${wheel_rim_radius}" length="${wheel_rim_thickness}"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${wheel_rim_mass}" radius="${wheel_rim_radius}" length="${wheel_rim_thickness}">
+            <origin xyz="0.0 0.0 -${motor_shaft_length/2}" rpy="0.0 0.0 0.0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+
+    <xacro:insert_roller parent="wheel${id}_link" reflect="1.0" theta="${0}" suffix="1" wheel_num="${id}"/>
+    <xacro:insert_roller parent="wheel${id}_link" reflect="1.0" theta="${2*PI/5}" suffix="2" wheel_num="${id}"/>
+    <xacro:insert_roller parent="wheel${id}_link" reflect="1.0" theta="${4*PI/5}" suffix="3" wheel_num="${id}"/>
+    <xacro:insert_roller parent="wheel${id}_link" reflect="1.0" theta="${6*PI/5}" suffix="4" wheel_num="${id}"/>
+    <xacro:insert_roller parent="wheel${id}_link" reflect="1.0" theta="${8*PI/5}" suffix="5" wheel_num="${id}"/>
+
+    <xacro:insert_roller parent="wheel${id}_link" reflect="-1.0" theta="${1*PI/5}" suffix="-1" wheel_num="${id}"/>
+    <xacro:insert_roller parent="wheel${id}_link" reflect="-1.0" theta="${3*PI/5}" suffix="-2" wheel_num="${id}"/>
+    <xacro:insert_roller parent="wheel${id}_link" reflect="-1.0" theta="${PI}" suffix="-3" wheel_num="${id}"/>
+    <xacro:insert_roller parent="wheel${id}_link" reflect="-1.0" theta="${7*PI/5}" suffix="-4" wheel_num="${id}"/>
+    <xacro:insert_roller parent="wheel${id}_link" reflect="-1.0" theta="${9*PI/5}" suffix="-5" wheel_num="${id}"/>
+
+</robot>

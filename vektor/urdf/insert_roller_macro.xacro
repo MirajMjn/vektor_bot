@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+    <!-- the following macro when called basically inserts a roller into the wheel at specified position-->
+
+    <xacro:include filename="constants.xacro"/>
+
+    <xacro:macro name="insert_roller" params="parent reflect theta suffix wheel_num">
+        <joint name="wheel_${wheel_num}_roller_${suffix}_joint" type="continuous">
+            <origin xyz="${distance_to_roller_center*cos(theta)} ${distance_to_roller_center*sin(theta)} ${reflect*roller_z_offset}" rpy="0.0 0.0 ${theta}" />
+            <parent link="${parent}"/>
+            <child link="wheel_${wheel_num}_roller_${suffix}_link"/>
+            <axis xyz="0.0 1.0 0.0"/>
+            <dynamics friction="0.1"/>
+        </joint>
+
+        <link name="wheel_${wheel_num}_roller_${suffix}_link">
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <!-- <mesh filename="package://vektor/meshes/roller_simplified.dae"/> -->
+                    <!-- <mesh filename="file://$(find vektor)/meshes/roller_simplified.stl"/> -->
+                    <mesh filename="file://$(find vektor)/meshes/roller_simplified.dae"/>
+                </geometry>
+                <material name="black"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <!-- <mesh filename="package://vektor/meshes/roller_simplified.dae"/> -->
+                    <!-- <mesh filename="file://$(find vektor)/meshes/roller_simplified.stl"/> -->
+                    <mesh filename="file://$(find vektor)/meshes/roller_simplified.dae"/>
+                </geometry>
+            </collision>
+
+            <inertial>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <mass value="0.003"/>
+                <inertia ixx="5.3e-8"
+                         ixy="0.0"
+                         ixz="0.0"
+                         iyy="8e-8"
+                         iyz="0.0"
+                         izz="8e-8"/>
+            </inertial>
+        </link>
+        <gazebo reference="wheel_${wheel_num}_roller_${suffix}_link">
+            <material>Gazebo/Green</material>
+            <fdir1>0 1 0"</fdir1>
+            <mu1>100</mu1>
+            <mu2>100</mu2>
+            <minDepth>0.001</minDepth>
+        </gazebo>
+    </xacro:macro>
+
+
+</robot>

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="vektor">
+
+    <xacro:include filename="constants.xacro"/>
+
+    <xacro:include filename="inertial_macros.xacro"/>
+
+    <xacro:include filename="materials.xacro"/>
+
+    <xacro:include filename="make_omniwheel_macro.xacro"/>
+
+    <xacro:include filename="insert_roller_macro.xacro"/>
+
+
+    <!-- BASE LINK-->
+
+    <link name="base_link">
+
+    </link>
+
+    <!-- CHASSIS LINK-->
+
+    <joint name="chassis_joint" type="fixed">
+        <parent link="base_link" />
+        <child link="chassis_link" />
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </joint>
+
+    <link name="chassis_link">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <cylinder radius="${chassis_cyl_radius}" length="${chassis_cyl_height}" />
+            </geometry>
+            <material name="green" />
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <cylinder radius="${chassis_cyl_radius}" length="${chassis_cyl_height}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="${chassis_cyl_mass}" radius="${chassis_cyl_radius}" length="${chassis_cyl_height}">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        </xacro:inertial_cylinder>
+    </link>
+    
+
+    <!-- DRIVE WHEEL LINKS-->
+
+    <xacro:make_omniwheel parent="chassis_link" id="1" theta="0" />
+    <xacro:make_omniwheel parent="chassis_link" id="2" theta="${2*PI/3}" />
+    <xacro:make_omniwheel parent="chassis_link" id="3" theta="-${2*PI/3}" />
+
+</robot>
