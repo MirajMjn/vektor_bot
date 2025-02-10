@@ -9,7 +9,7 @@ rpm_factor = 1
 def target_wheel_rpm(theta, wz) -> tuple[float, float, float]:
 
     theta = radians(theta)
-    print(theta)
+    print(bot_velocity)
 
     #wz = -pi if wbz == -1 else pi # TODO check this
 
@@ -22,4 +22,4 @@ def target_wheel_rpm(theta, wz) -> tuple[float, float, float]:
     
     return u1, u2, u3 # return the target rpm of each wheel 
 
-# print(degrees(target_wheel_rpm(210, 0)))
+print(target_wheel_rpm(90, 0))

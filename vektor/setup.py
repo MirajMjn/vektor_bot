@@ -16,6 +16,8 @@ setup(
         ('share/' + package_name + '/urdf', glob('urdf/*')),
         ('share/' + package_name + '/config', glob('config/*')),
         ('share/' + package_name + '/meshes', glob('meshes/*')),
+        # Include all message definition files
+        ('share/' + package_name + '/msg', glob('msg/*.msg')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -27,6 +29,12 @@ setup(
     entry_points={
         'console_scripts': [
             # 'node_executable = vektor.node:main',
+            'teleop_node = vektor.teleop_node:main',
+            'kineamtics_node = vektor.kinematics_node:main',
+            'bot_direction_publisher = vektor.bot_direction_publisher:main',
+            'bot_direction_subscriber = vektor.bot_direction_subscriber:main',
+            # 'pwm_subscriber = motor_controller.motor_pwm_follower:main'
+            'on_off_publisher = motor_controller.led_controller:main'
         ],
     }
 )
