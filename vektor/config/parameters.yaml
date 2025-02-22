@@ -1,0 +1,50 @@
+joy_node:
+  ros__parameters:
+    device_id: 0
+    deadzone: 0.1
+    # autorepeat_rate: 20.0
+
+motor1_PID_node:
+  ros__parameters:
+    Kp:
+    Ki:
+    Kd:
+    id: 1
+
+motor2_PID_node:
+  ros__parameters:
+    Kp:
+    Ki:
+    Kd:
+    id: 2
+
+motor3_PID_node:
+  ros__parameters:
+    Kp:
+    Ki:
+    Kd:
+    id: 3
+
+motor1_interface_node:
+  ros__parameters:
+    # subscription: 'motor1_PID_output'
+    subscription: '/motor_1/PID_output'
+    in1: 5
+    in2: 6
+    id: 1
+
+motor2_interface_node:
+  ros__parameters:
+    # subscription: 'motor2_PID_output'
+    subscription: '/motor_2/PID_output'
+    in1: 17
+    in2: 27
+    id: 2
+
+motor3_interface_node:
+  ros__parameters:
+    # subscription: 'motor3_PID_output'
+    subscription: '/motor_3/PID_output'
+    in1: 23
+    in2: 24
+    id: 3
